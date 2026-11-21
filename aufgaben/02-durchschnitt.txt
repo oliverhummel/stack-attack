@@ -1,0 +1,18 @@
+Durchschnitt berechnen
+Schreibe eine Methode durchschnitt, die den Durchschnitt (Mittelwert) aller Werte eines int-Arrays als double zurückgibt.
+Beispiel: {1, 2} ergibt 1.5
+===CODE===
+public static double durchschnitt(int[] werte) {
+    int summe = 0;
+    for (int i = 0; i < werte.length; i++) {
+        summe += werte[i];
+    }
+    return (double) summe / werte.length;
+}
+===FALSCH===
+public static int durchschnitt(int[] werte) {   // Ein Durchschnitt hat Nachkommastellen – int schneidet sie ab.
+int summe;                                      // Lokale Variablen haben keinen Startwert → Compilerfehler beim += .
+for (int i = 1; i < werte.length; i++) {        // Bei i = 1 fehlt das erste Element.
+summe = werte[i];                               // Mit = wird die Summe jedes Mal überschrieben statt aufaddiert.
+return summe / werte.length;                    // Ganzzahldivision! 3 / 2 ergibt in Java 1, nicht 1.5.
+return (double) (summe / werte.length);         // Zu spät gecastet: Die Ganzzahldivision ist da schon passiert.

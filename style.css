@@ -1,0 +1,248 @@
+@font-face { font-family: "Press Start 2P"; src: url("fonts/PressStart2P.woff2") format("woff2"); font-display: swap; }
+
+:root {
+  --bg: #15121d;
+  --bg2: #1f1a2b;
+  --rand: #3a3150;
+  --text: #e9e3f5;
+  --gedimmt: #9a90b0;
+  --gelb: #f2c230;
+  --gruen: #7fe08a;
+  --rot: #ff6b6b;
+  --lila: #8b6cf0;
+  --pixel: "Press Start 2P", monospace;
+  --code: ui-monospace, "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --ui: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; background: var(--bg); color: var(--text); }
+body {
+  font-family: var(--pixel);
+  font-size: 12px;
+  line-height: 1.6;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at top, #2a2140 0%, transparent 60%),
+    var(--bg);
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.75fr) minmax(300px, 1fr);
+  gap: 18px;
+  padding: 18px;
+  max-width: 1600px;
+  margin: 0 auto;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; padding: 10px; }
+}
+
+/* ---------- Spielbildschirm ---------- */
+.bildschirm {
+  position: relative;
+  aspect-ratio: 960 / 700;
+  width: 100%;
+  border: 6px solid #2b2438;
+  border-radius: 14px;
+  box-shadow: 0 0 0 2px #000, 0 10px 40px rgba(0,0,0,.6), inset 0 0 30px rgba(0,0,0,.6);
+  overflow: hidden;
+  background: #000;
+}
+#spielfeld {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* leichte Scanlines für Retro-Feeling */
+.bildschirm::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.05) 2px 3px);
+  z-index: 5;
+}
+
+.overlay {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 10px;
+  padding: 16px;
+  background: rgba(12, 9, 18, .82);
+  overflow: auto;
+  z-index: 4;
+  text-align: center;
+}
+.versteckt { display: none !important; }
+
+.logo {
+  margin: 0;
+  font-size: clamp(26px, 5.2vw, 56px);
+  line-height: 1.15;
+  color: var(--gelb);
+  text-shadow: 4px 4px 0 #c0392b, 8px 8px 0 #000;
+  letter-spacing: 2px;
+}
+.untertitel { margin: 4px 0 6px; color: var(--text); font-size: clamp(9px, 1.1vw, 12px); }
+.hinweis { color: var(--gedimmt); font-size: 10px; max-width: 46em; white-space: pre-line; }
+.hinweis.fehler { color: var(--rot); text-align: left; }
+.trenner { color: var(--gedimmt); font-size: 10px; margin-top: 6px; }
+
+.aufgabenliste {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 8px;
+  width: min(100%, 720px);
+}
+
+.knopf {
+  font-family: var(--pixel);
+  font-size: 11px;
+  color: #1b1626;
+  background: var(--gelb);
+  border: none;
+  padding: 10px 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #9b7a14, 0 4px 0 2px #000;
+  border-radius: 2px;
+  transition: transform .05s;
+}
+.knopf:hover { filter: brightness(1.1); }
+.knopf:active { transform: translateY(3px); box-shadow: 0 1px 0 #9b7a14; }
+.knopf:disabled { opacity: .35; cursor: default; }
+.knopf.gross { font-size: clamp(11px, 1.4vw, 15px); padding: 14px 22px; }
+.knopf.klein { font-size: 9px; padding: 6px 8px; box-shadow: 0 3px 0 #9b7a14; }
+.knopf.zweitrangig { background: #cfc6e4; box-shadow: 0 4px 0 #7d7396, 0 4px 0 2px #000; }
+
+.aufgabe-knopf {
+  font-family: var(--pixel);
+  text-align: left;
+  background: var(--bg2);
+  color: var(--text);
+  border: 2px solid var(--rand);
+  padding: 9px 10px;
+  cursor: pointer;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.aufgabe-knopf:hover { border-color: var(--gelb); }
+.aufgabe-knopf small { display: block; color: var(--gedimmt); font-size: 8px; margin-top: 4px; }
+
+.box {
+  background: #1d1828;
+  border: 4px solid var(--gelb);
+  box-shadow: 8px 8px 0 #000;
+  padding: 18px 22px;
+  max-width: 640px;
+  width: 100%;
+  display: flex; flex-direction: column; gap: 12px; align-items: center;
+}
+.box.fehler { border-color: var(--rot); }
+.boxtitel { font-size: clamp(13px, 1.8vw, 18px); color: var(--gelb); }
+.box.fehler .boxtitel { color: var(--rot); }
+.codeteil {
+  margin: 0;
+  font-family: var(--code);
+  font-weight: 600;
+  font-size: 20px;
+  background: #f4ecd6;
+  color: #1b1b1b;
+  padding: 4px 14px;
+  border: 3px solid #000;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.erkltext { margin: 0; font-family: var(--ui); font-size: 17px; line-height: 1.45; }
+.ergunter { color: var(--gedimmt); font-size: 10px; }
+.stats { border-collapse: collapse; font-size: 10px; }
+.stats td { padding: 3px 10px; }
+.stats td:first-child { text-align: left; color: var(--gedimmt); }
+.stats td:last-child { text-align: right; }
+.stats tr.summe td { color: var(--gelb); border-top: 2px solid var(--rand); padding-top: 6px; }
+.knoepfe { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+.highscore-eingabe { display: flex; flex-direction: column; gap: 8px; align-items: center; color: var(--gruen); font-size: 10px; }
+.highscore-eingabe .zeile { display: flex; gap: 8px; }
+.highscore-eingabe input {
+  font-family: var(--pixel); font-size: 12px; width: 13em;
+  background: #000; color: var(--gelb); border: 2px solid var(--gelb); padding: 7px;
+  text-transform: uppercase;
+}
+
+.touch { display: none; gap: 12px; margin-top: 12px; }
+.touch .knopf { flex: 1; font-size: 14px; padding: 18px; }
+@media (pointer: coarse) { .touch { display: flex; } }
+
+.steuerung { color: var(--gedimmt); font-size: 9px; text-align: center; margin: 12px 0 0; }
+.steuerung b { color: var(--text); font-weight: normal; }
+
+/* ---------- Seitenpanel ---------- */
+.panel { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.panel h2 { margin: 0; font-size: 14px; color: var(--gelb); line-height: 1.5; }
+.aufgabentext {
+  margin: 0;
+  font-family: var(--ui);
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-line;
+  color: var(--text);
+}
+.editor { border: 2px solid var(--rand); background: #0f0c16; box-shadow: 6px 6px 0 #000; }
+.editor-kopf {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 8px;
+  background: #2b2438;
+  font-size: 9px; color: var(--gedimmt);
+}
+.punkt { display: inline-block; width: 8px; height: 8px; margin-right: 3px; }
+.punkt.r { background: #ff6b6b; } .punkt.g { background: #f2c230; } .punkt.b { background: #7fe08a; margin-right: 8px; }
+.code {
+  margin: 0;
+  padding: 12px 14px;
+  font-family: var(--code);
+  font-size: 14px;
+  line-height: 1.6;
+  color: #d8d4e6;
+  overflow-x: auto;
+  min-height: 120px;
+  tab-size: 4;
+}
+.code .kw { color: #ff8fd0; }
+.code .ty { color: #6fd3ff; }
+.code .st { color: #b6f08a; }
+.code .nu { color: #ffb86c; }
+.code .ko { color: #7d7396; }
+.code .neu { animation: aufleuchten 1.2s ease-out; }
+@keyframes aufleuchten { 0% { background: var(--gelb); color: #000; } 100% { background: transparent; } }
+.luecke {
+  display: inline-block;
+  height: .85em;
+  vertical-align: -0.05em;
+  background: repeating-linear-gradient(90deg, #3a3150 0 0.8ch, transparent 0.8ch 1ch);
+}
+.luecke.aktiv { background: repeating-linear-gradient(90deg, var(--gelb) 0 0.8ch, transparent 0.8ch 1ch); animation: blinken 0.8s steps(2) infinite; }
+@keyframes blinken { 50% { opacity: .25; } }
+
+.bestenliste h3 { font-size: 11px; color: var(--gelb); margin: 6px 0 8px; }
+.bestenliste ol { margin: 0; padding: 0; list-style: none; font-size: 10px; }
+.bestenliste li { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dashed var(--rand); }
+.bestenliste li span:first-child { color: var(--gedimmt); width: 2.5em; }
+.bestenliste li span:nth-child(2) { flex: 1; }
+.bestenliste .leer { color: var(--gedimmt); font-size: 9px; }
+.anleitung { font-family: var(--ui); font-size: 15px; line-height: 1.5; margin: 0; }
+.anleitung b { color: var(--gelb); }
+
+/* Lesbarkeit: kleine Texte in klarer Schrift, Pixel-Schrift nur für Überschriften & Knöpfe */
+.untertitel, .hinweis, .trenner, .ergunter, .stats, .steuerung, .bestenliste ol, .bestenliste .leer,
+.aufgabe-knopf, .highscore-eingabe label, .editor-kopf > span {
+  font-family: var(--ui);
+  font-size: 14px;
+}
+.aufgabe-knopf { font-weight: 600; font-size: 15px; }
+.aufgabe-knopf small { font-size: 12px; font-weight: 400; }
+.stats { font-size: 15px; }
+.stats tr.summe td { font-weight: 700; }
+.untertitel { font-size: clamp(13px, 1.4vw, 16px); }
+.steuerung { font-size: 13px; }

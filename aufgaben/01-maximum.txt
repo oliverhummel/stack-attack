@@ -1,0 +1,20 @@
+Größte Zahl im Array
+Schreibe eine Methode max, die ein int-Array erhält und die größte darin enthaltene Zahl zurückgibt.
+Du darfst annehmen, dass das Array mindestens ein Element enthält.
+===CODE===
+public static int max(int[] a) {
+    int max = a[0];
+    for (int i = 1; i < a.length; i++) {
+        if (a[i] > max) {
+            max = a[i];
+        }
+    }
+    return max;
+}
+===FALSCH===
+public static void max(int[] a) {          // void gibt nichts zurück – gesucht ist aber eine Zahl.
+int max = 0;                               // Startwert 0 ist falsch, wenn alle Zahlen negativ sind!
+for (int i = 1; i <= a.length; i++) {      // Mit <= wird über das Array-Ende hinaus gelesen → ArrayIndexOutOfBoundsException.
+if (a[i] > a[i + 1]) {                     // Verglichen wird mit dem Nachbarn statt mit dem bisherigen Maximum – und am Ende läuft a[i + 1] aus dem Array.
+max = i;                                   // Das ist der Index, nicht der Wert!
+return a[i];                               // i existiert außerhalb der Schleife gar nicht mehr.

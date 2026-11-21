@@ -1,0 +1,16 @@
+Fakultät (rekursiv)
+Schreibe eine rekursive Methode fakultaet, die n! = 1 · 2 · … · n berechnet. Es gilt 0! = 1.
+Nutze long als Rückgabetyp, weil die Werte sehr schnell sehr groß werden.
+===CODE===
+public static long fakultaet(int n) {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * fakultaet(n - 1);
+}
+===FALSCH===
+public static int fakultaet(int n) {   // int läuft schon bei 13! über – deshalb long.
+if (n == 1) {                          // Für n = 0 endet die Rekursion nie → StackOverflowError!
+return 0;                              // 0! ist 1 – und mit 0 multipliziert wäre am Ende alles 0.
+return n * fakultaet(n);               // Ohne n - 1 ruft sich die Methode endlos selbst auf → StackOverflowError!
+return fakultaet(n - 1);               // Das n fehlt – so wird gar nichts multipliziert.

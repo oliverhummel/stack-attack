@@ -1,0 +1,21 @@
+Vokale zählen
+Schreibe eine Methode zaehleVokale, die zählt, wie viele Vokale (a, e, i, o, u – nur Kleinbuchstaben) in einem String vorkommen.
+Beispiel: "informatik" ergibt 4
+===CODE===
+public static int zaehleVokale(String text) {
+    int anzahl = 0;
+    for (int i = 0; i < text.length(); i++) {
+        char c = text.charAt(i);
+        if ("aeiou".indexOf(c) >= 0) {
+            anzahl++;
+        }
+    }
+    return anzahl;
+}
+===FALSCH===
+public static int zaehleVokale(string text) {   // Java unterscheidet Groß- und Kleinschreibung: String mit großem S.
+String c = text.charAt(i);                      // charAt liefert einen char, keinen String.
+char c = text[i];                               // Auf die Zeichen eines Strings greift man mit charAt(i) zu, nicht mit [i].
+if ("aeiou".indexOf(c) > 0) {                   // indexOf liefert für 'a' die Position 0 – mit > 0 würde kein a gezählt.
+if ("aeiou".contains(c)) {                      // contains erwartet einen String, c ist aber ein char → Compilerfehler.
+return text.length();                           // Das ist die Länge des Strings, nicht die Anzahl der Vokale.

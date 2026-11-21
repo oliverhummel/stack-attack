@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stack Attack</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="layout">
+  <section class="spielbereich">
+    <div class="bildschirm" id="bildschirm">
+      <canvas id="spielfeld" width="1920" height="1400"></canvas>
+
+      <!-- Startmenü -->
+      <div id="menu" class="overlay">
+        <h1 class="logo">STACK<br>ATTACK</h1>
+        <p class="untertitel">Kick den richtigen Code in den Stack!</p>
+        <div id="menuStatus" class="hinweis">Lade Aufgaben …</div>
+        <button id="karriereBtn" class="knopf gross versteckt">▶ ALLE AUFGABEN SPIELEN</button>
+        <div class="trenner versteckt" id="einzelTitel">– oder einzeln üben –</div>
+        <div id="aufgabenListe" class="aufgabenliste"></div>
+      </div>
+
+      <!-- Erklärung nach falschem Kick -->
+      <div id="erklaerung" class="overlay versteckt">
+        <div class="box fehler">
+          <div class="boxtitel">✗ FALSCH GEKICKT! &nbsp;−1 ☕</div>
+          <pre id="erklCode" class="codeteil"></pre>
+          <p id="erklText" class="erkltext"></p>
+          <button id="erklWeiter" class="knopf">WEITER [LEERTASTE]</button>
+        </div>
+      </div>
+
+      <!-- Ergebnis: Level geschafft / Game over -->
+      <div id="ergebnis" class="overlay versteckt">
+        <div class="box">
+          <div id="ergTitel" class="boxtitel"></div>
+          <div id="ergUnter" class="ergunter"></div>
+          <table id="ergStats" class="stats"></table>
+          <div id="ergHighscore" class="highscore-eingabe versteckt">
+            <label for="ergName">NEUER HIGHSCORE! Dein Name:</label>
+            <div class="zeile">
+              <input id="ergName" maxlength="12" autocomplete="off" spellcheck="false">
+              <button id="ergEintragen" class="knopf">OK</button>
+            </div>
+          </div>
+          <div class="knoepfe">
+            <button id="ergWeiter" class="knopf">WEITER ▶</button>
+            <button id="ergMenu" class="knopf zweitrangig">MENÜ</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="touch">
+      <button id="tSprung" class="knopf">▲ SPRINGEN</button>
+      <button id="tKick" class="knopf">KICKEN ►</button>
+    </div>
+    <p class="steuerung"><b>↑</b>/<b>Leertaste</b> springen · <b>→</b> kicken · <b>P</b> Pause · <b>M</b> Ton · <b>Esc</b> Menü</p>
+  </section>
+
+  <aside class="panel">
+    <h2 id="aufgabeTitel">STACK ATTACK</h2>
+    <p id="aufgabeText" class="aufgabentext"></p>
+    <div class="editor">
+      <div class="editor-kopf">
+        <span><span class="punkt r"></span><span class="punkt g"></span><span class="punkt b"></span> Loesung.java</span>
+        <button id="kopieren" class="knopf klein" disabled>KOPIEREN</button>
+      </div>
+      <pre id="code" class="code"></pre>
+    </div>
+    <div id="bestenliste" class="bestenliste"></div>
+  </aside>
+</main>
+
+<script src="js/aufgaben.js"></script>
+<script src="js/spiel.js"></script>
+</body>
+</html>

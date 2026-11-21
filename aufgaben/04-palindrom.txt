@@ -1,0 +1,21 @@
+Palindrom prüfen
+Schreibe eine Methode istPalindrom, die true zurückgibt, wenn ein String vorwärts und rückwärts gelesen gleich ist (z. B. "otto" oder "rentner"), sonst false.
+===CODE===
+public static boolean istPalindrom(String s) {
+    int links = 0;
+    int rechts = s.length() - 1;
+    while (links < rechts) {
+        if (s.charAt(links) != s.charAt(rechts)) {
+            return false;
+        }
+        links++;
+        rechts--;
+    }
+    return true;
+}
+===FALSCH===
+int rechts = s.length();                          // Der letzte Index ist length() - 1 – sonst StringIndexOutOfBoundsException.
+while (links <= s.length()) {                     // Das läuft über das Ende hinaus und vergleicht alles doppelt.
+if (s.charAt(links) == s.charAt(rechts)) {        // Umgedreht: Bei Gleichheit darf man noch nicht abbrechen.
+return true;                                      // Zu früh! Erst wenn alle Paare verglichen sind, steht das Ergebnis fest.
+links--;                                          // links muss nach rechts wandern, also hochzählen.

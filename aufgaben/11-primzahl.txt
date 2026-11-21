@@ -1,0 +1,20 @@
+Primzahl prüfen
+Schreibe eine Methode istPrimzahl, die true zurückgibt, wenn n eine Primzahl ist.
+Tipp: Es reicht, Teiler t zu prüfen, solange t * t <= n gilt.
+===CODE===
+public static boolean istPrimzahl(int n) {
+    if (n < 2) {
+        return false;
+    }
+    for (int t = 2; t * t <= n; t++) {
+        if (n % t == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+===FALSCH===
+if (n <= 2) {                          // 2 ist die kleinste Primzahl – sie würde hier ausgeschlossen.
+for (int t = 1; t * t <= n; t++) {     // Durch 1 ist jede Zahl teilbar – dann wäre nichts eine Primzahl.
+for (int t = 2; t * t < n; t++) {      // Bei Quadratzahlen wie 9 würde der Teiler 3 nicht mehr geprüft.
+if (n % t != 0) {                      // Umgedreht: Abbrechen muss man, wenn ein Teiler gefunden wurde (Rest 0).

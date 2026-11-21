@@ -17,8 +17,15 @@
         <h1 class="logo">STACK<br>ATTACK</h1>
         <p class="untertitel">Kick den richtigen Code in den Stack!</p>
         <div id="menuStatus" class="hinweis">Lade Aufgaben …</div>
-        <button id="karriereBtn" class="knopf gross versteckt">▶ ALLE AUFGABEN SPIELEN</button>
-        <div class="trenner versteckt" id="einzelTitel">– oder einzeln üben –</div>
+        <div id="zufallBereich" class="zufall versteckt">
+          <div class="zufall-label">🎲 Deine Zufallsaufgabe:</div>
+          <button id="zufallBtn" class="knopf gross"></button>
+          <div class="zufall-zeile">
+            <button id="wuerfelBtn" class="knopf klein zweitrangig">🎲 NEU WÜRFELN</button>
+            <button id="karriereBtn" class="knopf klein zweitrangig">ALLE NACHEINANDER ▶</button>
+          </div>
+        </div>
+        <div class="trenner versteckt" id="einzelTitel">– oder selbst eine Aufgabe wählen –</div>
         <div id="aufgabenListe" class="aufgabenliste"></div>
       </div>
 

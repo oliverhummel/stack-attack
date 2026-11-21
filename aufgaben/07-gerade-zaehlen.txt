@@ -1,0 +1,19 @@
+Gerade Zahlen zählen
+Schreibe eine Methode zaehleGerade, die zählt, wie viele gerade Zahlen in einem int-Array stehen.
+Nutze dafür die for-each-Schleife.
+Beispiel: {3, 8, 10, 7} ergibt 2
+===CODE===
+public static int zaehleGerade(int[] zahlen) {
+    int anzahl = 0;
+    for (int z : zahlen) {
+        if (z % 2 == 0) {
+            anzahl++;
+        }
+    }
+    return anzahl;
+}
+===FALSCH===
+for (int z : zahlen.length) {          // Die for-each-Schleife läuft über das Array selbst, nicht über seine Länge.
+if (z / 2 == 0) {                      // / ist die Division – den Rest berechnet der Modulo-Operator %.
+if (z % 2 == 1) {                      // So werden die ungeraden Zahlen gezählt (und negative wie -3 nicht einmal die).
+if (zahlen % 2 == 0) {                 // zahlen ist das ganze Array – geprüft werden muss das einzelne Element z.

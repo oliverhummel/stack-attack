@@ -3,5 +3,11 @@
   "02-durchschnitt.txt",
   "03-vokale.txt",
   "04-palindrom.txt",
-  "05-fakultaet.txt"
+  "05-fakultaet.txt",
+  "06-summe-bis-n.txt",
+  "07-gerade-zaehlen.txt",
+  "08-lineare-suche.txt",
+  "09-string-umkehren.txt",
+  "10-schaltjahr.txt",
+  "11-primzahl.txt"
 ]

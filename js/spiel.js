@@ -1047,6 +1047,7 @@
 
   function zumMenu() {
     S = null;
+    wuerfeln();
     zeigeOverlay('menu');
     renderMenuPanel();
     baueMenu();
@@ -1066,20 +1067,35 @@
     $('bestenliste').innerHTML = bestenlisteHTML('karriere', 'BESTENLISTE (ALLE AUFGABEN)');
   }
 
+  let markiert = -1;
+  function wuerfeln() {
+    if (!AUFGABEN.length) return;
+    let neu;
+    do { neu = Math.floor(Math.random() * AUFGABEN.length); } while (AUFGABEN.length > 1 && neu === markiert);
+    markiert = neu;
+  }
+  function starteMarkierte() {
+    if (markiert < 0) return;
+    neuesSpiel([markiert], 'einzeln');
+    cv.focus();
+  }
+
   function baueMenu() {
+    if (AUFGABEN.length && (markiert < 0 || markiert >= AUFGABEN.length)) wuerfeln();
     const liste = $('aufgabenListe');
     liste.innerHTML = '';
     AUFGABEN.forEach((a, i) => {
       const b = document.createElement('button');
-      b.className = 'aufgabe-knopf';
+      b.className = 'aufgabe-knopf' + (i === markiert ? ' markiert' : '');
       const best = hsListe('aufgabe:' + a.datei)[0];
       b.innerHTML = `${i + 1}. ${esc(a.titel)}<small>${a.teile.length} Teile${best ? ` · Rekord ${best.punkte} (${esc(best.name)})` : ''}</small>`;
       b.onclick = () => { neuesSpiel([i], 'einzeln'); cv.focus(); };
       liste.appendChild(b);
     });
     const da = AUFGABEN.length > 0;
-    $('karriereBtn').classList.toggle('versteckt', !da);
+    $('zufallBereich').classList.toggle('versteckt', !da);
     $('einzelTitel').classList.toggle('versteckt', !da);
+    if (da) $('zufallBtn').innerHTML = `▶ START<small>${esc(AUFGABEN[markiert].titel)}</small>`;
   }
 
   async function kopieren() {
@@ -1105,7 +1121,10 @@
     }
     const k = e.key;
     if (k === 'm' || k === 'M') { stumm = !stumm; return; }
-    if (!S) return;
+    if (!S) {
+      if (k === 'Enter' && !$('menu').classList.contains('versteckt') && !(e.target && e.target.tagName === 'BUTTON')) { e.preventDefault(); starteMarkierte(); }
+      return;
+    }
     if (S.zustand === 'erklaerung') {
       if (k === ' ' || k === 'Enter') { e.preventDefault(); if (!e.repeat) weiterNachErklaerung(); }
       return;
@@ -1126,6 +1145,8 @@
   $('ergWeiter').onclick = ergebnisWeiter;
   $('ergMenu').onclick = zumMenu;
   $('kopieren').onclick = kopieren;
+  $('zufallBtn').onclick = starteMarkierte;
+  $('wuerfelBtn').onclick = () => { wuerfeln(); baueMenu(); };
   $('karriereBtn').onclick = () => { neuesSpiel(AUFGABEN.map((_, i) => i), 'karriere'); cv.focus(); };
   cv.tabIndex = 0;
 

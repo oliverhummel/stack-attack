@@ -1,0 +1,16 @@
+Lineare Suche
+Schreibe eine Methode enthaelt, die true zurückgibt, wenn die Zahl gesucht im Array werte vorkommt, sonst false.
+===CODE===
+public static boolean enthaelt(int[] werte, int gesucht) {
+    for (int i = 0; i < werte.length; i++) {
+        if (werte[i] == gesucht) {
+            return true;
+        }
+    }
+    return false;
+}
+===FALSCH===
+public static int enthaelt(int[] werte, int gesucht) {   // Die Antwort ist ja oder nein – also boolean.
+if (werte == gesucht) {                                  // Das ganze Array lässt sich nicht mit einer Zahl vergleichen.
+if (i == gesucht) {                                      // i ist der Index – verglichen werden muss der Wert werte[i].
+return gesucht;                                          // Zurückgegeben wird ein Wahrheitswert, nicht die Zahl.

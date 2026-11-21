@@ -1,0 +1,16 @@
+Summe von 1 bis n
+Schreibe eine Methode summeBis, die die Summe aller ganzen Zahlen von 1 bis n berechnet und zurückgibt.
+Beispiel: summeBis(4) ergibt 1 + 2 + 3 + 4 = 10
+===CODE===
+public static int summeBis(int n) {
+    int summe = 0;
+    for (int i = 1; i <= n; i++) {
+        summe += i;
+    }
+    return summe;
+}
+===FALSCH===
+int summe = 1;                         // Startwert 1 verfälscht das Ergebnis – die Summe beginnt bei 0.
+for (int i = 1; i < n; i++) {          // Mit < fehlt die Zahl n selbst.
+summe += n;                            // Hier wird n immer wieder addiert statt der Zählvariable i.
+return i;                              // i existiert nach der Schleife nicht mehr – zurück soll die Summe.

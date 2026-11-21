@@ -1,0 +1,19 @@
+Schaltjahr
+Schreibe eine Methode istSchaltjahr. Ein Jahr ist ein Schaltjahr, wenn es durch 4 teilbar ist –
+außer es ist durch 100 teilbar. Durch 400 teilbare Jahre sind aber wieder Schaltjahre.
+Beispiele: 2024 ja, 1900 nein, 2000 ja
+===CODE===
+public static boolean istSchaltjahr(int jahr) {
+    if (jahr % 400 == 0) {
+        return true;
+    }
+    if (jahr % 100 == 0) {
+        return false;
+    }
+    return jahr % 4 == 0;
+}
+===FALSCH===
+if (jahr % 4 == 0) {                   // Falsche Reihenfolge: Dann wäre auch 1900 ein Schaltjahr. Erst die Ausnahmen prüfen!
+if (jahr / 400 == 0) {                 // / ist die Division – ob etwas teilbar ist, prüft der Rest mit %.
+return jahr / 4 == 0;                  // / ist die Division – ob etwas teilbar ist, prüft der Rest mit %.
+return jahr % 4;                       // Das ist eine Zahl (der Rest), kein boolean.

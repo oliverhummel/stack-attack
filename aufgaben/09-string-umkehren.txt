@@ -1,0 +1,16 @@
+String umkehren
+Schreibe eine Methode umkehren, die einen String rückwärts zurückgibt.
+Beispiel: "java" ergibt "avaj"
+===CODE===
+public static String umkehren(String text) {
+    String ergebnis = "";
+    for (int i = text.length() - 1; i >= 0; i--) {
+        ergebnis += text.charAt(i);
+    }
+    return ergebnis;
+}
+===FALSCH===
+String ergebnis = null;                          // Mit null als Start entsteht "null" am Anfang des Ergebnisses.
+for (int i = text.length(); i >= 0; i--) {       // Der letzte Index ist length() - 1 → StringIndexOutOfBoundsException.
+ergebnis = text.charAt(i);                       // Mit = wird das Ergebnis überschrieben – und ein char ist kein String.
+return text;                                     // Das ist der ursprüngliche Text, nicht der umgekehrte.
